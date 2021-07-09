@@ -42,8 +42,9 @@ SD卡读卡器(我的电脑没有自带SD读卡器，只能USB转接)
 >  可能要先erase一下再安装（我是这样做才成功的）
 
 3. ​	接下来，如果你想要无鼠标无键盘开启树莓派，**请不要直接把SD卡插到树莓派上启动**
-   1. 首先在SD卡的boot分区根目录新建``ssh``空白文件
+   1. 首先在SD卡的boot分区(注意不是rootfs文件夹下的`/boot`)根目录新建``ssh``空白文件
    2. 同样的位置新建``wpa_supplicant.conf``，然后是在文件中添加
+
 
 ```
 country=CN
@@ -52,11 +53,12 @@ update_config=1
 network={
     ssid="Wifi名称"
     psk="Wifi密码"
-    key_mgmt=WPA-PSK
 }
 ```
 
 > 该文件内容引自[慕课网手记](http://www.imooc.com/article/268242)，里面还讲到了对其他Wifi加密方式的写法，WPA-PSK是WPA/WPA2加密方式对应的写法，Wifi加密方式可以通过Wifi Setting查看（原谅Ubuntu小白的不漂亮的查看方式）
+
+另外，最好将``rootfs``下的``/etc/apt/source.list``修改成国内镜像，这样下载的时候方便一些，可以不用通过`ssh`连接到树莓派再在上面修改(感觉还是有点麻烦，所以直接在本机上用自己熟悉的编辑器修改，或者用`sed`也行，不过本菜不太会用这些小trick，相对熟悉vim)
 
 ​		  3. 之后就可以安全退出U盘，将SD卡插入树莓派的SD卡插口了(之前上网搜看到有人把SD卡也通过USB转接插到树莓派上了没成功，所以还是仔细找找SD卡插口)
 
