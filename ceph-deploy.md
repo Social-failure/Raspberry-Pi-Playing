@@ -143,6 +143,33 @@ root@raspberrypi:~/test# ceph mgr services
 
 ![](Pictures/gui.png)
 
+### 各种问题解决
+#### neither `public_addr` nor `public_network` keys are defined for monitors
+修改ceph.conf配置文件（此IP段根据个人情况设定），添加public_network = （主机ip）
+
+#### RuntimeError: config file /etc/ceph/ceph.conf exists with different content; use --overwrite-conf to overwrite
+执行`ceph-deploy --overwrite-conf config push （节点名字）`即可
+
+#### admin_socket: exception getting command descriptions: [Errno 2] No such file or directory
+是节点的hostname与/etc/hosts不符
+执行`hostnamectl set-hostname （节点名字）`
+
+#### 一个连续的[ceph]
+类似这样
+```
+[ceph2][ERROR ] perf dump {<logger>} {<counter>}
+[ceph2][ERROR ] log reopen
+[ceph2][ERROR ] help
+[ceph2][ERROR ] git_version
+[ceph2][ERROR ] log flush
+[ceph2][ERROR ] log dump
+[ceph2][ERROR ] config unset <var>
+[ceph2][ERROR ] config show
+[ceph2][ERROR ] get_command_descriptions
+[ceph2][ERROR ] dump_mempools
+```
+在节点执行`sudo pkill ceph`即可
+
 ### reference
 
 1. [Linux中国部署方案](https://linux.cn/article-13020-1.html)
@@ -155,3 +182,4 @@ root@raspberrypi:~/test# ceph mgr services
 8. [文件系统](https://www.zhihu.com/search?type=content&q=ceph-deploy%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F)
 9. [单机版部署](https://zhuanlan.zhihu.com/p/67832892)
 10. [网页版gui(在文章最后)](https://zhuanlan.zhihu.com/p/331770823)
+11. [各种问题解决](https://blog.csdn.net/weixin_43357497/article/details/113763295)
